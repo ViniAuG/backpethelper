@@ -1,22 +1,23 @@
-CREATE TABLE cliente (
+CREATE TABLE customers (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(255) NOT NULL,
-    telefone VARCHAR(15) NOT NULL,
-    email VARCHAR(255) NOT NULL
+    `name` VARCHAR(100) NOT NULL,
+    phone VARCHAR(15) NOT NULL,
+    mail VARCHAR(70) NOT NULL,
+    code VARCHAR(255)
 );
 
-CREATE TABLE empresa (
+CREATE TABLE companies (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(255) NOT NULL,
+    `name` VARCHAR(100) NOT NULL,
     cnpj VARCHAR(20) NOT NULL,
-    endereco VARCHAR(255) NOT NULL
+    address VARCHAR(120) NOT NULL
 );
 
-CREATE TABLE agendamento (
+CREATE TABLE bookings (
     id INT PRIMARY KEY AUTO_INCREMENT,
-    data DATE NOT NULL,
-    cliente_id INT NOT NULL,
-    empresa_id INT NOT NULL,
-    FOREIGN KEY (cliente_id) REFERENCES cliente(id),
-    FOREIGN KEY (empresa_id) REFERENCES empresa(id)
+    `date` DATETIME NOT NULL,
+    customer_id INT NOT NULL,
+    company_id INT NOT NULL,
+    FOREIGN KEY (customer_id) REFERENCES customers(id),
+    FOREIGN KEY (company_id) REFERENCES companies(id)
 );
