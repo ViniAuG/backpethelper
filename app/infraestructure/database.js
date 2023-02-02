@@ -70,6 +70,26 @@ class queries {
     return company;
   };
 
+  static createBooking = async (booking) => {
+    booking.company = await this.findCompanyByCpnj(booking.cnpj);
+    booking.customer = await this.findCustomerByMail(booking.mail);
+
+    console.log(booking.company);
+    console.log(booking.customer);
+
+    if (booking.company == null || booking.customer == null) {
+      throw new Error("Invalid company or customer");
+    }
+
+    let createBooking = `INSERT INTO \`pethelper\`.\`bookings\` (\`date\`, \`customer_id\`, \`company_id\`) VALUES (\'${booking.date}\', \'${booking.customer[0].id}\', \'${booking.company[0].id}\');`;
+
+    let [firstInsert] = await pool.query(createBooking);
+    const createdBookingID = firstInsert.insertId;
+
+    booking.id = createdBookingID;
+    return booking;
+  };
+
   static findCustomerByID = async (id) => {
     let sql = `SELECT * FROM customers WHERE id = ${id}`;
     let [result] = await pool.query(sql);
@@ -79,6 +99,13 @@ class queries {
   static findCompanies = async () => {
     let sql = "SELECT * FROM companies";
     let [result] = await pool.query(sql);
+    return result;
+  };
+
+  static findBookings = async () => {
+    let sql = "SELECT * FROM bookings";
+    let [result] = await pool.query(sql);
+
     return result;
   };
 }

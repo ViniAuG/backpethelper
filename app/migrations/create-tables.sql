@@ -9,8 +9,7 @@ CREATE TABLE customers (
 CREATE TABLE companies (
     id INT PRIMARY KEY AUTO_INCREMENT,
     `name` VARCHAR(100) NOT NULL,
-    cnpj VARCHAR(20) NOT NULL,
-    address VARCHAR(120) NOT NULL
+    cnpj VARCHAR(20) NOT NULL
 );
 
 CREATE TABLE bookings (
